@@ -1,0 +1,15 @@
+
+apply plugin: 'java'
+
+version = 0.1
+sourceCompatibility = 1.6
+
+jar{
+	manifest{attributes 'Main-Class': 'hello.javafx.Clock'}
+}
+
+dependencies{
+	compile files("${System.properties['java.home']}/lib/ext/jfxrt.jar")
+}
+
+
