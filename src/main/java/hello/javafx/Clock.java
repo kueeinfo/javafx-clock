@@ -1,11 +1,9 @@
 package hello.javafx;
 
 import java.time.LocalDateTime;
-import java.util.TimeZone;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
-import javafx.animation.RotateTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -13,16 +11,20 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * A JavaFX-based Clock
+ * 
+ * 
+ * @author pango
+ *
+ */
 public class Clock extends Application {
 	private int tick = 0;
 
@@ -52,12 +54,40 @@ public class Clock extends Application {
 	}
 
 	private void addCircle(final Scene scene) {
-		final Circle circle = new Circle(120, 120, 100);
-		circle.setFill(Color.AZURE);
+		final Circle circle = new Circle(120, 120, 118);
+		circle.setFill(Color.SLATEGRAY);
 		circle.setStroke(Color.BLACK);
+
+		final Circle innerCircle = new Circle(120, 120, 100);
+		innerCircle.setFill(Color.BEIGE);
 
 		final Group root = (Group) scene.getRoot();
 		root.getChildren().add(circle);
+		root.getChildren().add(innerCircle);
+
+		addIndicators(root);
+	}
+
+	private void addIndicators(final Group root){
+		for(int i=0; i<60; i++){
+			final Line line;
+			int len = 10;
+			int wid = 1;
+
+			if(i%5 == 0){
+				len = 15;
+				wid = 3;
+			}
+
+			line= new Line(120, 20+len, 120, 20);
+			line.setStroke(Color.LIGHTSLATEGRAY);
+			line.setStrokeWidth(wid);
+
+			movePivot(line, 0, 95);
+			line.setRotate(i*6);
+
+			root.getChildren().add(line);
+		}
 	}
 
 	private void addHands(final Scene scene) {
@@ -70,7 +100,7 @@ public class Clock extends Application {
 		secLine.setStrokeWidth(1);
 		hrLine.setStroke(Color.GREEN);
 		minLine.setStroke(Color.BLUE);
-		secLine.setStroke(Color.YELLOWGREEN);
+		secLine.setStroke(Color.BROWN);
 
 		movePivot(hrLine, 0, 30);
 		movePivot(minLine, 0, 40);
